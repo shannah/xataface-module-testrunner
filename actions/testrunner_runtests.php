@@ -2,6 +2,15 @@
 class actions_testrunner_runtests {
 	function handle($params){
 		$app = Dataface_Application::getInstance();
+		$mod = Dataface_ModuleTool::getInstance()->loadModule('modules_testrunner');
+		// Now let's run the javascript tests
+		import('Dataface/JavascriptTool.php');
+		$js = Dataface_JavascriptTool::getInstance();
+		$js->setMinify(false);
+		$js->setUseCache(false);
+		
+		//print_r($tests);exit;
+		$js->addPath(dirname(__FILE__).'/../js', $mod->getBaseURL().'/js');
 		
 		
 		$testdirs = array(
@@ -39,6 +48,23 @@ class actions_testrunner_runtests {
 		Dataface_ModuleTool::getInstance()
 			->loadModule('modules_testrunner')
 			->getTestSuite()->run($result);
-		print $result->toHtml();
+		$out =  $result->toHtml();
+		
+		
+		
+		
+		
+		
+		$js->import('xataface/modules/testrunner/runtests.js');
+		
+		
+		df_register_skin('testrunner', dirname(__FILE__).'/../templates');
+		df_display(array(
+				'php_test_output'=>$out
+			),
+			'xataface/modules/testrunner/runtests.html'
+		);
+		
+		
 	}
 }
