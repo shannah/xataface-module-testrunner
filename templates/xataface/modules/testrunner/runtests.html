@@ -10,6 +10,9 @@
 	<script src="{$ENV.DATAFACE_URL}/js/jquery.packed.js"></script>
 	<script src="{$ENV.DATAFACE_URL}/modules/XataJax/js/xatajax.core.js"></script>
 	<script src="{$ENV.DATAFACE_URL}/modules/XataJax/js/xatajax.util.js"></script>
+	{foreach from=$ENV.APPLICATION_OBJECT->headContent item=headContent}
+        {$headContent}
+    {/foreach}
 	</head>
 	<body>
 	
